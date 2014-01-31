@@ -65,13 +65,15 @@ class IconfinderApi
   #search for icons by search term
   def search query = 'icon', page = 0, c = 10, min = 1, max = 48
     params = {'q' => query, 'p' => page, 'c' => c, 'min' => min, 'max' => max, 'l' => 0, 'price' => 'any' }
-    send_request 'search', params
+    json = send_request 'search', params
+    json['searchresults']['icons']
   end
 
   #get information about an icon
   def icondetails id = 1, size = 128
     params = { 'id' => id, 'size' => size }
-    send_request 'icondetails', params
+    json = send_request 'icondetails', params
+    json['icon']
   end
 
 end
