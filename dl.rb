@@ -33,7 +33,7 @@ Dir.mkdir(path) unless File.exists?(path)
 ic = IconfinderApi.new 'your api key'
 
 result = ic.search query.to_s
-puts "Find " + ARGV[1].to_s + " icons"
+puts "Find " + result.length.to_s + " icons"
 puts "Downloading icons to " + ARGV[1].to_s + " directory."
 result.each do |e|
   filename = File.basename e['image']
