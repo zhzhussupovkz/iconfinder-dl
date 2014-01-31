@@ -25,6 +25,10 @@ optparse = OptionParser.new do |opts|
 end
 
 optparse.parse!
+if ARGV.empty?
+  p optparse
+  exit
+end
 
 query = ARGV[0]
 path = File.dirname(__FILE__) + '/' + ARGV[1].to_s
