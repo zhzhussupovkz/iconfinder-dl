@@ -48,12 +48,12 @@ if options.empty?
   exit
 end
 
-options[:q] = 'icon' if not options.has_key? "q"
-options[:path] = 'img' if not options.has_key? "path"
-options[:page] = 0 if not options.has_key? "page"
-options[:c] = 2 if not options.has_key? "c"
-options[:min] = 32 if not options.has_key? "min"
-options[:max] = 64 if not options.has_key? "max"
+options[:q] = 'icon' if options.has_key? "q" == false
+options[:path] = 'img' if options.has_key? "path" == false
+options[:page] = 0 if options.has_key? "page" == false
+options[:c] = 2 if options.has_key? "c" == false
+options[:min] = 32 if options.has_key? "min" == false
+options[:max] = 64 if options.has_key? "max" == false
 
 query = options[:q]
 path = File.dirname(__FILE__) + '/' + options[:path].to_s
