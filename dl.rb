@@ -8,7 +8,9 @@ require_relative 'iconfinder_api'
 options = {}
 
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: dl.rb [options]"
+  opts.banner = "Command-line tool for downloading icons from https://www.iconfinder.com\n"
+  opts.banner += "Copyright (c) 2014 Zhussupov Zhassulan zhzhussupovkz@gmail.com\n"
+  opts.banner += "While using this program, get API key from https://www.iconfinder.com.\nUsage: dl.rb [options]"
 
   opts.on('-h', '--help', "help page") do
     puts opts
