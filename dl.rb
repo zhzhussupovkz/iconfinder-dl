@@ -15,11 +15,11 @@ optparse = OptionParser.new do |opts|
     exit
   end
 
-  opts.on('-q', '--query', "search for icons by search term") do |q|
+  opts.on('-q', '--query QUERY', "search for icons by search term") do |q|
     options[:q] = q
   end
 
-  opts.on('-d', '--directory', "folder, which will be uploaded icons") do |dir|
+  opts.on('-d', '--directory DIRECTORY', "folder, which will be uploaded icons") do |dir|
     options[:path] = dir
   end
 end
@@ -30,8 +30,8 @@ if ARGV.empty?
   exit
 end
 
-query = ARGV[0]
-path = File.dirname(__FILE__) + '/' + ARGV[1].to_s
+query = options[:q]
+path = File.dirname(__FILE__) + '/' + options[:path].to_s
 Dir.mkdir(path) unless File.exists?(path)
 
 ic = IconfinderApi.new 'your api key'
