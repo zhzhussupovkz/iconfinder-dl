@@ -25,7 +25,7 @@ optparse = OptionParser.new do |opts|
 end
 
 optparse.parse!
-if ARGV.empty?
+if options.empty?
   p optparse
   exit
 end
