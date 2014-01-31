@@ -6,6 +6,7 @@ require "optparse"
 require_relative 'iconfinder_api'
 
 options = {}
+path = 'img'
 
 optparse = OptionParser.new do |opts|
   opts.banner = "Command-line tool for downloading icons from https://www.iconfinder.com\n"
@@ -22,7 +23,7 @@ optparse = OptionParser.new do |opts|
   end
 
   opts.on('-d', '--directory DIRECTORY', "folder, which will be uploaded icons") do |dir|
-    options[:path] = dir
+    path = dir
   end
 
   opts.on('-p', '--page PAGE', "specify result page(index). starts from 0") do |page|
@@ -48,22 +49,19 @@ if options.empty?
   exit
 end
 
-options[:q] = 'icon' if options.has_key? "q" == false
-options[:path] = 'img' if options.has_key? "path" == false
-options[:page] = 0 if options.has_key? "page" == false
-options[:c] = 2 if options.has_key? "c" == false
-options[:min] = 32 if options.has_key? "min" == false
-options[:max] = 64 if options.has_key? "max" == false
+if not path or path == false
+  path = 'img'
+end
 
 query = options[:q]
-path = File.dirname(__FILE__) + '/' + options[:path].to_s
+path = File.dirname(__FILE__) + '/' + path.to_s
 Dir.mkdir(path) unless File.exists?(path)
 
 ic = IconfinderApi.new 'your api key'
 
-result = ic.search query.to_s, options[:page], options[:c], options[:min], options[:max]
+result = ic.search options
 puts "Find " + result.length.to_s + " icons"
-puts "Downloading icons to " + options[:path].to_s + " directory."
+puts "Downloading icons to " + path.to_s + " directory."
 result.each do |e|
   filename = File.basename e['image']
   begin
