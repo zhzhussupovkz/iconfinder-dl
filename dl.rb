@@ -27,7 +27,7 @@ optparse = OptionParser.new do |opts|
   end
 
   opts.on('-p', '--page PAGE', "specify result page(index). starts from 0") do |page|
-    options[:page] = page
+    options[:p] = page
   end
 
   opts.on('-c', '--count COUNT', "number of icons per page") do |c|
@@ -59,19 +59,27 @@ Dir.mkdir(path) unless File.exists?(path)
 
 ic = IconfinderApi.new 'your api key'
 
+threads = []
+
 result = ic.search options
-puts "Find " + result.length.to_s + " icons"
+puts "Found " + result.length.to_s + " icons for search query: #{query}."
 puts "Downloading icons to " + path.to_s + " directory."
 result.each do |e|
-  filename = File.basename e['image']
-  begin
-    open(e['image'], 'rb') do |img|
-      File.new("#{path}/#{filename}", 'wb').write(img.read)
-      puts "Icon '" + filename + "': OK" 
+  threads << Thread.new do
+    filename = File.basename e['image']
+    begin
+      open(e['image'], 'rb') do |img|
+        File.new("#{path}/#{filename}", 'wb').write(img.read)
+        puts "Icon '" + filename + "': OK" 
+      end
+    rescue Exception => e
+      next
     end
-  rescue Exception => e
-    next
   end
 end
 
-puts "Successfully download " + result.length.to_s + " icons."
+threads.each do |th|
+  th.join
+end
+
+puts "Successfully downloaded " + result.length.to_s + " icons."
