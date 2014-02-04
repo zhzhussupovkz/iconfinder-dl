@@ -61,6 +61,7 @@ ic = IconfinderApi.new 'your api key'
 
 threads = []
 
+t1 = Time.now
 result = ic.search options
 puts "Found " + result.length.to_s + " icons for search query: #{query}."
 puts "Downloading icons to " + path.to_s + " directory."
@@ -82,4 +83,6 @@ threads.each do |th|
   th.join
 end
 
-puts "Successfully downloaded " + result.length.to_s + " icons."
+t2 = Time.now
+msecs = ((t2-t1).round(2)).to_s
+puts "Successfully downloaded " + result.length.to_s + " icons at #{msecs} sec."
