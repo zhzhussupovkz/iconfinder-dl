@@ -64,6 +64,10 @@ class IconfinderApi
 
   #search for icons by search term
   def search options = { :q => 'icon', :p => 0, :c => 10, :min => 1, :max => 48 }
+    options[:p] = 0 if options.key?(:p) == false
+    options[:c] = 10 if options.key?(:c) == false
+    options[:min] = 32 if options.key?(:min) == false
+    options[:max] = 256 if options.key?(:max) == false
     params = { :l => 0, :price => 'any' }
     options = options.merge(params)
     json = send_request 'search', options
